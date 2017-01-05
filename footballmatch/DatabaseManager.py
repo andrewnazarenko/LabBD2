@@ -208,6 +208,7 @@ class DB(object):
                     "MatchUp.team as team2 where "
                     "MatchUp.match.stadium_id = MatchUp.stadium.id and MatchUp.match.team1_id = team1.id "
                     "and MatchUp.match.team2_id = team2.id "
-                    "and ((MATCH (team1.name) AGAINST ('%s' IN BOOLEAN MODE)) or (MATCH (team2.name) AGAINST ('%s' IN BOOLEAN MODE)));" % (resword,resword))
+                    "and ((MATCH (team1.name) AGAINST ('%s' IN BOOLEAN MODE)) or (MATCH (team2.name) AGAINST ('%s' IN BOOLEAN MODE)));" % (
+                    resword, resword))
         self.close()
         return cur.fetchall()

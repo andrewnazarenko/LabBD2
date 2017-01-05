@@ -6747,6 +6747,10 @@ margin-right:10px;
 float: left;
 margin-left: 10px;
 }
+.clickable
+{
+    cursor: pointer;
+}
 
 @media print {
   .visible-print-inline {
