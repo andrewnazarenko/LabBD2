@@ -137,7 +137,7 @@
         </thead>
         <tbody>
         {% for match in matches %}
-            <tr class='clickable-row' data-href="{% url 'edit_page' match.id %}">
+            <tr class='' data-href="{% url 'edit_page' match.id %}">
                 <th>{{ match.date }}</th>
                 <th>{{ match.team1_name }}</th>
                 <th>{{ match.team2_name }}</th>
