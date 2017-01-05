@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html>
+<head>
+
+    <script src="{% static "jquery-2.2.4.min.js" %}"></script>
+    <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/bootstrap-theme.min.css" %}" rel="stylesheet">
+    <link href="{% static "css/core.css" %}" rel="stylesheet">
+
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script src="{% static "js/bootstrap.min.js" %}"></script>
+    <script>
+function goBack() {
+    window.history.back();
+}
+</script>
+    <style>
+        .btn_lmargin {
+            margin-left: 10%;
+        }
+
+        .inner {
+            display: inline-block;
+        }
+    </style>
+</head>
+
+<body>
+{% if not export_mode %}
+    <div class="jumbotron">
+        <center><h2>Edit match</h2></center>
+    </div>
+{% endif %}
+<div class="container">
+<a onclick="goBack()" class="btn btn-default"><span class="glyphicon glyphicon-arrow-left"></span></a>
+<br>
+<br>
+    <form action={{ request.get_full_path }} method="post" class="form-vertical" role="form">
+        {% csrf_token %}
+        <div class="form-group">
+            <label for="team1_id">Team1:</label>
+            <select class="form-control" id="team1_id" name="team1_id">
+                {% for team in teams %}
+                    <option value="{{ team.id }}" {% if matches.team1_id == team.id %}
+                            selected="selected" {% endif %}>{{ team.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="team2_id">Team2:</label>
+            <select class="form-control" id="team2_id" name="team2_id">
+                {% for team in teams %}
+                    <option value="{{ team.id }}" {% if matches.team2_id == team.id %}
+                            selected="selected" {% endif %}>{{ team.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="stadium_id">Stadium:</label>
+            <select class="form-control" id="stadium_id" name="stadium_id">
+                {% for st in stadium %}
+                    <option value="{{ st.id }}" {% if matches.stadium_id == st.id %}
+                            selected="selected" {% endif %}>{{ st.name }}</option>
+                {% endfor %}
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="score1_id">First team score:</label>
+            <div class="form-group">
+                <input id="score1_id" name="score1_id" type="number" min="0" max="100" value="{{ matches.res1 }}" >
+
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="score2_id">Second team score:</label>
+            <div class="form-group">
+                <input id="score2_id" name="score2_id" type="number" min="0" max="100" value="{{ matches.res2 }}" >
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Date:</label>
+            <div class="form-group">
+                <input id="entry-day-time" name="entry-day-time" type="date" value="{{ matches.date }}">
+            </div>
+        </div>
+
+        <input type="submit" name="edit" value="Edit"/>
+    </form>
+</div>
+</body>
+</html>

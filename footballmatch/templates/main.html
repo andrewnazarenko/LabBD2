@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+{% load staticfiles %}
+<html lang="en">
+<head>
+
+    <script src="{% static "jquery-2.2.4.min.js" %}"></script>
+    {#        <link href="{% static "css/bootstrap.min.css" %}" rel="stylesheet">#}
+    {#        <link href="{% static "css/bootstrap-theme.min.css" %}" rel="stylesheet">#}
+    {#        <link href="{% static "css/core.css" %}" rel="stylesheet">#}
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap-theme.min.css">
+    {#        <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+    {#        <script src="{% static "js/bootstrap.min.js" %}"></script>#}
+
+    <meta charset="UTF-8">
+    <title>Main</title>
+
+</head>
+<body>
+<br>
+<div class="container">
+    <div class="inner btn_lmargin btn_bmargin">
+        <a href="{% url 'init' %}" class="btn btn-primary btn-success"><span class="glyphicon glyphicon-open"></span>
+            Import from file</a>
+        <a href="{% url 'add_page' %}" class="btn btn-primary btn-success"><span class="glyphicon glyphicon-plus"></span>
+        Add new</a>
+        <a href="/" style="float: right;" class="btn btn-primary btn-primary">Show all</a>
+    </div>
+    <br>
+
+
+    <div class="btn-group btn-group-justified" role="group" aria-label="...">
+        <div class="btn-group" role="group">
+            <a href="/?res=>">
+                <button type="button" class="btn btn-default">Home team won</button>
+            </a>
+        </div>
+        <div class="btn-group" role="group">
+            <a href="/?res==">
+                <button type="button" class="btn btn-default">Draw</button>
+            </a>
+        </div>
+        <div class="btn-group" role="group">
+            <a href="/?res=<">
+                <button type="button" class="btn btn-default">Away team won</button>
+            </a>
+        </div>
+    </div>
+    <table class="table table-hover">
+        <thead>
+        <tr>
+            <th>Date</th>
+            <th>First Team</th>
+            <th>Second Team</th>
+            <th>Score</th>
+            <th>Stadium</th>
+            <th>Delete</th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for match in matches %}
+            <tr class='clickable-row' data-href="{% url 'edit_page' match.id %}">
+                <th>{{ match.date }}</th>
+                <th>{{ match.team1_name }}</th>
+                <th>{{ match.team2_name }}</th>
+                <th>{{ match.res1 }} : {{ match.res2 }}</th>
+                <th>{{ match.stadium_name }}</th>
+                <th><a href="/remove/{{ match.id }}" class="btn btn-xs btn-danger"><span
+                    class="glyphicon glyphicon-trash"></span></a></th>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+    <div class="inner btn_lmargin btn_bmargin">
+        <form action={{ request.get_full_path }}>
+            <div class="form-group inner">
+                <div class="form-group">
+                    <label class="filter-col" style="margin-right:0;" for="name">From date:</label>
+                    <input type="date" class="form-control" name="date1" id="date1">
+                    <label class="filter-col" style="margin-right:0;" for="name">To date:</label>
+                    <input type="date" class="form-control" name="date2" id="date2">
+                </div>
+                <button type="submit" class="btn btn-default btn_l2margin">Find<span
+                        class="glyphicon glyphicon-search"></span></button>
+            </div>
+        </form>
+    </div>
+    <div class="inner btn_lmargin btn_bmargin">
+        <form action={{ request.get_full_path }}>
+            <div class="form-group inner">
+                <div class="form-group">
+                    <label class="filter-col" style="margin-right:0;" for="name">Full phrase search:</label>
+                    <input type="text" class="form-control" name="fullword" id="fullword">
+                    <label class="filter-col" style="margin-right:0;" for="name">Include word:</label>
+                    <input type="text" class="form-control" name="incword" id="incword">
+                    <label class="filter-col" style="margin-right:0;" for="name">Exclude word:</label>
+                    <input type="text" class="form-control" name="exword" id="exword">
+                </div>
+                <button type="submit" class="btn btn-default btn_l2margin">Find<span
+                        class="glyphicon glyphicon-search"></span></button>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script>
+    jQuery(document).ready(function ($) {
+        $(".clickable-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+    });
+</script>
+
+</body>
+</html>
