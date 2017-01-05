@@ -197,7 +197,17 @@ class DB(object):
         self.connect()
         if self.connection is None:
             return []
-        resword = '\"' + fullword + '\"'
+        resword = ""
+        if fullword != '':
+            resword = '\"' + fullword + '\"'
+        if incword != '':
+            for str in incword.split(" "):
+                resword = resword + " +" + str
+        if exword != '':
+            for str in exword.split(" "):
+                resword = resword + " -" + str
+        print resword
+
         cur = self.connection.cursor(mdb.cursors.DictCursor)
         cur.execute("select MatchUp.match.id, MatchUp.match.date, MatchUp.match.res1, MatchUp.match.res2, "
                     "MatchUp.stadium.name as stadium_name, MatchUp.stadium.id as stadium_id, "
